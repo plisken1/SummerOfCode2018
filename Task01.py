@@ -2,36 +2,62 @@
 def part1(fileName):
 	cnt=0
 	for line in (open(fileName)):
-		if (not("#" in line)) and len(line)>1:
+		if (not("#" in line)) and len(line)>0:
 			cnt = cnt + 1
-			print(cnt, " ",line)
 	return cnt
 
 
-def part2(fileName):
-	startingDirection="E"
-	currentDirection=startingDirection
-	x=0
-	y=0
+#Part 2
+def part2(fileName,startFacing):
+    startingDirection=startFacing #Starting Direction, if it matters LOL
+    cd=startingDirection #current Direction
+    x=0
+    y=0
+    for line in (open(fileName)):
+        if (not("#" in line)) and len(line)>0:
+            instruction=(line.rstrip('\n')) #just in case
+            if ("A" in instruction): # Direction Change
+                if (cd=="N"):
+                    cd="W"
+                elif (cd=="W"):
+                    cd="S"
+                elif (cd=="S"):
+                    cd="E"
+                elif (cd=="E"):
+                    cd="N"
+            elif ("C" in instruction): # Direction Change
+                if (cd=="N"):
+                    cd="E"
+                elif (cd=="W"):
+                    cd="N"
+                elif (cd=="S"):
+                    cd="W"
+                elif (cd=="E"):
+                    cd="S"
+            elif ("F" in instruction):                
+                move=int((instruction[1:])) #get amount to move
+                if (cd=="N"):
+                    y=y+move
+                if (cd=="E"):
+                    x=x+move
+                if (cd=="S"):
+                    y=y-move
+                if (cd=="W"):
+                    x=x-move
+    #print("current Direction =",cd," x =",x," y =",y) # Current State
+    #Calculate distance to return
+    if (x<0):
+        x=(x*-1)
+    if (y<0):
+        y=(y*-1)
+    return (x+y)
+    
 
 
-	def calculate(instruction):
-		if (instruction=="A"):
-			if (currentDirection=="N"):
-				currentDirection="W"
-			if (currentDirection=="W"):
-				currentDirection="S"
-			if (currentDirection=="S"):
-				currentDirection="E"
-			if (currentDirection=="E"):
-				currentDirection="N"
 
 
 
-
-
-
-
-
-
+#print("starting Direction -",startingDirection)
+#print("current Direction -",currentDirection)
 print(part1("01-mowmaster.txt"))
+print(part2("01-mowmaster.txt","E"))
