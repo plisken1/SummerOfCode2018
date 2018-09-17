@@ -9,8 +9,7 @@ def part1(fileName):
 
 #Part 2
 def part2(fileName,startFacing):
-    startingDirection=startFacing #Starting Direction, if it matters LOL
-    cd=startingDirection #current Direction
+    cd=startFacing #current direction.
     x=0
     y=0
     for line in (open(fileName)):
